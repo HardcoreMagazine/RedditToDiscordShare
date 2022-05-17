@@ -6,6 +6,24 @@ and post them as embedded files
 -- so your friends/server-mates don't have to open post
 in reddit app (ultimate time saver!)
 
+**Tested and works with**:
+- Normal links
+- Phone "share" links
+- Links with brackets "<", ">"
+- NSFW posts
+
+**Doesn't work with**:
+- Videos (YET!)
+- Gallery (multi-picture) posts
+
+---
+### Usage
+```
+,cv [link] - extract image link from reddit post  
+```
+Example:
+![img.png](img.png)
+
 ---
 ### Dependencies:
 ```
