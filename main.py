@@ -15,7 +15,7 @@ async def about(context):
     await context.channel.send(f'Open source Discord bot that converts '
                                f'reddit \'share\' links into embedded files. '
                                f'Project page on Github: '
-                               f'<https://github.com/HardcoreMagazine/redditToDiscordShare>')
+                               f'<https://github.com/HardcoreMagazine/RedditToDiscordShare>')
 
 
 @bot.command(brief='Convert reddit link', description='Convert reddit link into embedded image or video')
