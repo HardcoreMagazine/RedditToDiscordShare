@@ -7,9 +7,10 @@ and post them as embedded files
 in reddit app (ultimate time saver!)
 
 **Tested and works with**:
-- Normal links
-- Phone "share" links
+- Normal & "share" links
 - Links with brackets "<", ">"
+- External links (mostly)
+- GIF posts
 - NSFW posts
 
 **Doesn't work with**:
