@@ -1,5 +1,5 @@
 # RedditToDiscordShare (RTDS)
-
+## This is an experimental version!
 Bot made explicitly to extract 
 image/video links from reddit 'share' links
 and post them as embedded files 
@@ -23,7 +23,7 @@ in reddit app (ultimate time saver!)
 ,cv [link] - extract image link from reddit post  
 ```
 Example:  
-![Example](img.png)
+![img.png](img.png)
 
 ---
 ### Dependencies:
