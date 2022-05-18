@@ -21,23 +21,22 @@ async def about(context):
 @bot.command(brief='Convert reddit link', description='Convert reddit link into embedded image or video')
 async def cv(context, message):
     converted_message = message.replace("<", "").replace(">", "")
-    # remove brackets if used
-    result = 'error'
+    # remove brackets from link (if present)
+    reddit_agent = asyncpraw.Reddit(
+        client_id=cfg.settings['redditAPI']['client_id'],
+        client_secret=cfg.settings['redditAPI']['client_secret'],
+        user_agent=cfg.settings['redditAPI']['user_agent']
+    )  # creates read-only reddit instance
+    submission = await reddit_agent.submission(url=converted_message)
     try:
-        reddit_agent = asyncpraw.Reddit(
-            client_id=cfg.settings['redditAPI']['client_id'],
-            client_secret=cfg.settings['redditAPI']['client_secret'],
-            user_agent=cfg.settings['redditAPI']['user_agent']
-        )  # creates read-only instance
-        submission = await reddit_agent.submission(url=converted_message)
         result = submission.url
-        await reddit_agent.close()  # closes instance
+        await reddit_agent.close()  # closes reddit instance
         await context.channel.send(result)
-    except Exception as exc:
-        print(f'@ Exception has occurred: {exc}')
-        await context.channel.send('Reddit API is currently down, please try again later.')
+    except Exception as msg_exc:
+        await context.channel.send('Invalid link')
+        print(f'@ An exception has occurred: {msg_exc}')
+
 
 bot.run(cfg.settings['discordAPI']['token'])  # creates discord bot instance
-# code below this line execute on script shutdown
+# code below this line executes on script shutdown
 print('@ Shutdown in progress')
-
