@@ -23,7 +23,7 @@ in reddit app (ultimate time saver!)
 ,cv [link] - extract image link from reddit post  
 ```
 Example:  
-![img.png](img.png)
+![Example](img.png)
 
 ---
 ### Dependencies:
