@@ -1,4 +1,6 @@
-# RedditToDiscordShare (RTDS)
+# RedditToDiscordShare (RTDS) 
+*This is a stable version*  
+*[Experimental branch](https://github.com/HardcoreMagazine/RedditToDiscordShare/tree/experimental)*
 
 Bot made explicitly to extract 
 image/video links from reddit 'share' links

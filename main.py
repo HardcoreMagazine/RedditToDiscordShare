@@ -27,16 +27,26 @@ async def cv(context, message):
         client_secret=cfg.settings['redditAPI']['client_secret'],
         user_agent=cfg.settings['redditAPI']['user_agent']
     )  # creates read-only reddit instance
-    submission = await reddit_agent.submission(url=converted_message)
+    # slow && safe method to talk with API
     try:
+        submission = await reddit_agent.submission(url=converted_message)
         result = submission.url
-        await reddit_agent.close()  # closes reddit instance
         await context.channel.send(result)
-    except Exception as msg_exc:
-        await context.channel.send('Invalid link')
-        print(f'@ An exception has occurred: {msg_exc}')
+    except Exception as api_exc:
+        await context.channel.send('Invalid URL / Reddit API is down, try again later.')
+        await reddit_agent.close()  # closes reddit instance
+        print(f'@ An exception has occurred: {api_exc}')
+    await reddit_agent.close()  # closes reddit instance
+
+
+@cv.error  # MissingRequiredArgument error handler for 'cv' command
+async def on_command_error(context, error):
+    if isinstance(error, cmd.MissingRequiredArgument):
+        await context.channel.send('Missing line argument.\n'
+                                   'Use: `,cv submission_URL`')
+        print(f'@ An exception has occurred: {error}')
 
 
 bot.run(cfg.settings['discordAPI']['token'])  # creates discord bot instance
 # code below this line executes on script shutdown
-print('@ Shutdown in progress')
+print('@ Bot shutdown in progress')
