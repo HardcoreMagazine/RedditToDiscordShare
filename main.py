@@ -3,6 +3,11 @@ from discord.ext import commands as cmd
 import cfg  # see note in README.md
 
 bot = cmd.Bot(command_prefix=cfg.settings['discordAPI']['prefix'])
+reddit_agent = asyncpraw.Reddit(
+    client_id=cfg.settings['redditAPI']['client_id'],
+    client_secret=cfg.settings['redditAPI']['client_secret'],
+    user_agent=cfg.settings['redditAPI']['user_agent']
+)  # creates read-only reddit instance
 
 
 @bot.event
@@ -22,15 +27,9 @@ async def about(context):
 async def cv(context, message):
     converted_message = message.replace("<", "").replace(">", "")
     # remove brackets from link (if present)
-    reddit_agent = asyncpraw.Reddit(
-        client_id=cfg.settings['redditAPI']['client_id'],
-        client_secret=cfg.settings['redditAPI']['client_secret'],
-        user_agent=cfg.settings['redditAPI']['user_agent']
-    )  # creates read-only reddit instance
     submission = await reddit_agent.submission(url=converted_message)
     try:
         result = submission.url
-        await reddit_agent.close()  # closes reddit instance
         await context.channel.send(result)
     except Exception as msg_exc:
         await context.channel.send('Invalid link')
@@ -40,3 +39,4 @@ async def cv(context, message):
 bot.run(cfg.settings['discordAPI']['token'])  # creates discord bot instance
 # code below this line executes on script shutdown
 print('@ Shutdown in progress')
+reddit_agent.close()  # closes reddit instance
