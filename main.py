@@ -88,7 +88,6 @@ async def on_command_error(context, error):
     if isinstance(error, cmd.MissingRequiredArgument):
         await context.channel.send(f'Missing line argument\n'
                                    f'Use: `{prefix}help [command]`')
-        # see TODO @1
     print(f'@ An exception has occurred: "{error}"')
 
 
