@@ -1,3 +1,4 @@
+import asyncio
 import asyncpraw
 from discord.ext import commands as cmd
 import cfg  # see note in README.md
@@ -8,6 +9,12 @@ reddit_agent = asyncpraw.Reddit(
     client_secret=cfg.settings['redditAPI']['client_secret'],
     user_agent=cfg.settings['redditAPI']['user_agent']
 )  # creates single (shared) read-only reddit instance
+
+
+async def shutdown():
+    # log out from reddit && discord
+    await reddit_agent.close()
+    await bot.close()
 
 
 @bot.event
@@ -21,7 +28,7 @@ async def on_ready():
 
 
 @bot.command(brief='About this bot', description='About this bot')
-async def about(context):
+async def tabout(context):
     await context.channel.send(f'Open source Discord bot that converts '
                                f'reddit \'share\' links into embedded files. '
                                f'Project page on Github: '
@@ -29,7 +36,7 @@ async def about(context):
 
 
 @bot.command(brief='Convert reddit link', description='Convert reddit link into embedded image or video')
-async def cv(context, message):
+async def tcv(context, message):
     # ***should probably use RegEx for this one***
     if 'reddit' not in message:
         # checks if message contains 'reddit' keyword
@@ -51,24 +58,15 @@ async def cv(context, message):
             print(f'@ An exception has occurred: {exc}')
 
 
-@cv.error  # MissingRequiredArgument error handler for 'cv' command
+@tcv.error  # MissingRequiredArgument error handler for 'cv' command
 async def on_command_error(context, error):
     if isinstance(error, cmd.MissingRequiredArgument):
         await context.channel.send('Missing line argument.\n'
-                                   'Command usage: `,cv submission_URL`')
+                                   'Command usage: `,tcv submission_URL`')
         print(f'@ An exception has occurred: {error}')
 
 
 bot.run(cfg.settings['discordAPI']['token'])  # creates discord bot instance
 # code below this line executes on script shutdown
 print('@ Shutdown in progress')
-reddit_agent.close()  # unsafe: method is not awaited
-
-
-'''
-async def my():
-    await reddit_agent.close()
-    # closes reddit instance on shutdown
-    # unsafe: may not work as intended or work at all
-'''
-# neither of these two works
+asyncio.run(shutdown())
