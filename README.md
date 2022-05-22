@@ -19,8 +19,8 @@ in reddit app (ultimate time saver!)
 - Reddit videos
 - Gallery (multi-picture) posts
 
-**Invite bot on your server**:
-* TBA
+**Invite bot to your server**:
+* [click me](https://discord.com/api/oauth2/authorize?client_id=975771580993003540&permissions=274878024768&scope=bot)
 
 ---
 ### Usage
