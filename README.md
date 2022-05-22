@@ -1,6 +1,6 @@
-# RedditToDiscordShare (RTDS) 
-*This is a stable version*  
-*[Experimental branch](https://github.com/HardcoreMagazine/RedditToDiscordShare/tree/experimental)*
+# RedditToDiscordShare (RTDS)
+*This is an experimental version*  
+*[Stable branch](https://github.com/HardcoreMagazine/RedditToDiscordShare/tree/master)*
 
 Bot made explicitly to extract 
 image/video links from reddit 'share' links
@@ -11,21 +11,24 @@ in reddit app (ultimate time saver!)
 **Tested and works with**:
 - Normal & "share" links
 - Links with brackets "<", ">"
-- External links (YouTube, Imgur, Wikipedia and others)
+- External links (such as YouTube, Imgur, Wikipedia)
 - GIF posts
-- NSFW posts  
+- NSFW posts
 
 **Doesn't work with**:
 - Reddit videos
 - Gallery (multi-picture) posts
 
+**Invite bot on your server**:
+* TBA
+
 ---
 ### Usage
 ```
-,cl [URL] - extract element-link from reddit post  
+,cv [Submission_URL] - extract image/link from selected post  
 ```
 Example:  
-![](image.png)
+![image](image.png)
 
 ---
 ### Dependencies:
