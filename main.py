@@ -1,9 +1,13 @@
 import asyncio
 import asyncpraw
+from asyncpraw import exceptions as rexc
 from discord.ext import commands as cmd
 import cfg  # see note in README.md
 
-bot = cmd.Bot(command_prefix=cfg.settings['discordAPI']['prefix'])
+prefix = cfg.settings['discordAPI']['prefix']
+bot = cmd.Bot(command_prefix=prefix)
+# create discord instance
+# TODO @1: custom help command
 reddit_agent = asyncpraw.Reddit(
     client_id=cfg.settings['redditAPI']['client_id'],
     client_secret=cfg.settings['redditAPI']['client_secret'],
@@ -12,58 +16,58 @@ reddit_agent = asyncpraw.Reddit(
 
 
 async def shutdown():
-    # log out from reddit && discord
+    # safe log-out from reddit && discord
     await reddit_agent.close()
     await bot.close()
 
 
 @bot.event
 async def on_ready():
-    print(f'@ Boot successful. Logged as {bot.user}')
+    print(f'@ Boot successful. Logged as {bot.user}, prefix: "{prefix}"')
     # tells host if bot is ready to use
-    print(f'@ Permissions: read-only={reddit_agent.read_only}')
+    print(f'@ Permissions: read_only={reddit_agent.read_only}')
     # tells if bot has permissions to read/write comments && posts
-    # note: first command executed after boot runs a lot slower than usual
-    # (reddit/discord API "feature")
 
 
 @bot.command(brief='About this bot', description='About this bot')
-async def tabout(context):
+async def about(context):
     await context.channel.send(f'Open source Discord bot that converts '
                                f'reddit \'share\' links into embedded files. '
+                               f'List all available commands: `{prefix}help`'
                                f'Project page on Github: '
                                f'<https://github.com/HardcoreMagazine/RedditToDiscordShare>')
 
 
-@bot.command(brief='Convert reddit link', description='Convert reddit link into embedded image or video')
-async def tcv(context, message):
-    # ***should probably use RegEx for this one***
-    if 'reddit' not in message:
-        # checks if message contains 'reddit' keyword
-        if 'http' in message:
-            # shade message if contains link to another website
-            await context.channel.send(f'\'<{message}>\' is not a Reddit link')
-        else:
-            await context.channel.send(f'\'{message}\' is not a Reddit link')
-    else:
-        typesafe_message = message.replace("<", "").replace(">", "")
-        # remove brackets from link (if present; else pass)
-        try:
-            submission = await reddit_agent.submission(url=typesafe_message)
-            # request all data from selected post
-            embedded_link = submission.url
-            await context.channel.send(embedded_link)
-        except Exception as exc:
-            await context.channel.send('Invalid link / Reddit API is down, try again later.')
-            print(f'@ An exception has occurred: {exc}')
+@bot.command(brief='Convert reddit link', description='Convert reddit URL into embedded image or video')
+async def cv(context, message):
+    typesafe_url = message\
+        .replace("<", "").replace(">", "")\
+        .replace("|", "")
+    # remove garbage from URL if present
+    try:
+        submission = await reddit_agent.submission(url=typesafe_url)
+        # request all data from selected post
+        embedded_link = submission.url
+        await context.channel.send(embedded_link)
+    except Exception as exc:
+        if isinstance(exc, rexc.InvalidURL):
+            await context.channel.send('Invalid URL')
+        elif isinstance(exc, rexc.RedditAPIException):
+            await context.channel.send('Reddit API is down, try again later')
+        print(f'@ An exception has occurred: "{exc}"')
 
 
-@tcv.error  # MissingRequiredArgument error handler for 'cv' command
+@bot.event  # universal error handler for commands
 async def on_command_error(context, error):
+    if isinstance(error, cmd.CommandNotFound):
+        await context.channel.send(f'Unrecognized command\n'
+                                   f'Use `{prefix}help` to list '
+                                   f'all available commands')
     if isinstance(error, cmd.MissingRequiredArgument):
-        await context.channel.send('Missing line argument.\n'
-                                   'Command usage: `,tcv submission_URL`')
-        print(f'@ An exception has occurred: {error}')
+        await context.channel.send(f'Missing line argument\n'
+                                   f'Use: `{prefix}help [command]`')
+        # see TODO @1
+    print(f'@ An exception has occurred: "{error}"')
 
 
 bot.run(cfg.settings['discordAPI']['token'])  # creates discord bot instance

@@ -19,13 +19,16 @@ in reddit app (ultimate time saver!)
 - Reddit videos
 - Gallery (multi-picture) posts
 
+**Invite bot on your server**:
+* TBA
+
 ---
 ### Usage
 ```
-,tcv [link] - extract image link from reddit post  
+,cv [Submission_URL] - extract image/link from selected post  
 ```
 Example:  
-![](img.png)
+![image](image.png)
 
 ---
 ### Dependencies:
