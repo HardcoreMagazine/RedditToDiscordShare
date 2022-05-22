@@ -2,16 +2,19 @@ import asyncio
 import asyncpraw
 from asyncpraw import exceptions as rexc
 from discord.ext import commands as cmd
-import cfg  # see note in README.md
+from bot_commands import bot_cmds
+from bot_commands import cmd_keys_list
+from cfg import settings  # see note in README.md
 
-prefix = cfg.settings['discordAPI']['prefix']
-bot = cmd.Bot(command_prefix=prefix)
-# create discord instance
-# TODO @1: custom help command
+prefix = settings['discordAPI']['prefix']
+bot = cmd.Bot(
+    command_prefix=prefix,
+    help_command=None
+)  # create discord instance
 reddit_agent = asyncpraw.Reddit(
-    client_id=cfg.settings['redditAPI']['client_id'],
-    client_secret=cfg.settings['redditAPI']['client_secret'],
-    user_agent=cfg.settings['redditAPI']['user_agent']
+    client_id=settings['redditAPI']['client_id'],
+    client_secret=settings['redditAPI']['client_secret'],
+    user_agent=settings['redditAPI']['user_agent']
 )  # creates single (shared) read-only reddit instance
 
 
@@ -29,19 +32,19 @@ async def on_ready():
     # tells if bot has permissions to read/write comments && posts
 
 
-@bot.command(brief='About this bot', description='About this bot')
+@bot.command()
 async def about(context):
     await context.channel.send(f'Open source Discord bot that converts '
                                f'reddit \'share\' links into embedded files. '
-                               f'List all available commands: `{prefix}help`'
+                               f'List all available commands: `{prefix}help`\n'
                                f'Project page on Github: '
                                f'<https://github.com/HardcoreMagazine/RedditToDiscordShare>')
 
 
-@bot.command(brief='Convert reddit link', description='Convert reddit URL into embedded image or video')
+@bot.command()
 async def cv(context, message):
-    typesafe_url = message\
-        .replace("<", "").replace(">", "")\
+    typesafe_url = message \
+        .replace("<", "").replace(">", "") \
         .replace("|", "")
     # remove garbage from URL if present
     try:
@@ -57,6 +60,25 @@ async def cv(context, message):
         print(f'@ An exception has occurred: "{exc}"')
 
 
+@bot.command()
+async def help(context, message=None):
+    if message is None:
+        msg = '```Available commands:\n\n'
+        for c in cmd_keys_list:
+            msg += f'{c} - {bot_cmds[c]["brief"]}\n'
+        msg += f'\nUse {prefix}help [command] ' \
+               f'to show help on specific command```'
+        await context.send(msg)
+    else:
+        if message in cmd_keys_list:
+            await context.channel.send(f'```{bot_cmds[message]["description"]}\n\n'
+                                       f'{bot_cmds[message]["usage"]}```')
+        else:
+            await context.channel.send(f'Command "{message}" not found\n'
+                                       f'Use `{prefix}help` to '
+                                       f'list all available commands')
+
+
 @bot.event  # universal error handler for commands
 async def on_command_error(context, error):
     if isinstance(error, cmd.CommandNotFound):
@@ -70,7 +92,7 @@ async def on_command_error(context, error):
     print(f'@ An exception has occurred: "{error}"')
 
 
-bot.run(cfg.settings['discordAPI']['token'])  # creates discord bot instance
+bot.run(settings['discordAPI']['token'])  # creates discord bot instance
 # code below this line executes on script shutdown
 print('@ Shutdown in progress')
 asyncio.run(shutdown())
