@@ -35,7 +35,7 @@ async def on_ready():
 @bot.command()
 async def about(context):
     await context.channel.send(f'Open source Discord bot that converts '
-                               f'reddit \'share\' links into embedded files. '
+                               f'reddit "share" links into embedded files.\n'
                                f'List all available commands: `{prefix}help`\n'
                                f'Project page on Github: '
                                f'<https://github.com/HardcoreMagazine/RedditToDiscordShare>')
