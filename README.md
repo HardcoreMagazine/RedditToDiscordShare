@@ -11,21 +11,21 @@ in reddit app (ultimate time saver!)
 **Tested and works with**:
 - Normal & "share" links
 - Links with brackets "<", ">"
-- External links (mostly)
+- External links (YouTube, Imgur, Wikipedia and others)
 - GIF posts
-- NSFW posts
+- NSFW posts  
 
 **Doesn't work with**:
-- Videos (YET!)
+- Reddit videos
 - Gallery (multi-picture) posts
 
 ---
 ### Usage
 ```
-,cv [link] - extract image link from reddit post  
+,cl [URL] - extract element-link from reddit post  
 ```
 Example:  
-![Example](img.png)
+![](img.png)
 
 ---
 ### Dependencies:
@@ -33,7 +33,6 @@ Example:
 Python >= 3.8.10
 py-cord >= 1.7.3
 asyncpraw >= 7.5.0
-asyncprawcore >= 2.3.0
 ```
 ---
 ### 'cfg.py' contents:
@@ -41,7 +40,7 @@ asyncprawcore >= 2.3.0
 settings = {
     'discordAPI': {
         'token': 'bot_private_key',
-        'prefix': 'bot_prefix'
+        'prefix': ','
     },
     'redditAPI': {
         'client_id': 'client_id',
