@@ -7,7 +7,6 @@ import cfg  # see note in README.md
 prefix = cfg.settings['discordAPI']['prefix']
 bot = cmd.Bot(command_prefix=prefix)
 # create discord instance
-# TODO @1: custom help command
 reddit_agent = asyncpraw.Reddit(
     client_id=cfg.settings['redditAPI']['client_id'],
     client_secret=cfg.settings['redditAPI']['client_secret'],
@@ -66,7 +65,6 @@ async def on_command_error(context, error):
     if isinstance(error, cmd.MissingRequiredArgument):
         await context.channel.send(f'Missing line argument\n'
                                    f'Use: `{prefix}help [command]`')
-        # see TODO @1
     print(f'@ An exception has occurred: "{error}"')
 
 
