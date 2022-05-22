@@ -11,7 +11,7 @@ in reddit app (ultimate time saver!)
 **Tested and works with**:
 - Normal & "share" links
 - Links with brackets "<", ">"
-- External links (such as YouTube, Imgur)
+- External links (such as YouTube, Imgur, Wikipedia)
 - GIF posts
 - NSFW posts
 
