@@ -25,7 +25,7 @@ in reddit app (ultimate time saver!)
 ,cl [URL] - extract element-link from reddit post  
 ```
 Example:  
-![](img.png)
+![](image.png)
 
 ---
 ### Dependencies:
