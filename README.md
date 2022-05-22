@@ -25,7 +25,7 @@ in reddit app (ultimate time saver!)
 ,tcv [link] - extract image link from reddit post  
 ```
 Example:  
-![Example](image.png)
+![](img.png)
 
 ---
 ### Dependencies:
