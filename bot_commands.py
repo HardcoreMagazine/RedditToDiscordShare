@@ -14,13 +14,22 @@ bot_cmds = {
         'usage': f'Usage:\n{prefix}about'
     },
     'cv': {
-        'brief': 'convert reddit links',
-        'description': 'Convert Reddit URL into embedded image/link',
+        'brief': 'convert reddit media into embedded file',
+        'description': 'Convert Reddit URL into embedded image/link. '
+                       'Works with: GIF posts, single-image posts, '
+                       'post that use external links (Imgur, '
+                       'YouTube, Wikipedia etc)',
         'usage': f'Usage:\n{prefix}cv [Reddit_URL]'
+    },
+    'cvt': {
+        'brief': 'extract text from reddit post',
+        'description': 'Extracts text from reddit post (command primarily '
+                       'meant for r/copypasta)',
+        'usage': f'Usage: \n{prefix}cvt [Reddit_URL]'
     }
     # to be continued...
 }
 
 cmd_keys_list = list()
 for c in bot_cmds:
-    cmd_keys_list.append(c)  # returns keys
+    cmd_keys_list.append(c)  # returns map keys

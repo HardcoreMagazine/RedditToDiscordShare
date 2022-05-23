@@ -1,5 +1,6 @@
 import asyncio
 import asyncpraw
+from datetime import datetime
 from asyncpraw import exceptions as rexc
 from discord.ext import commands as cmd
 from bot_commands import bot_cmds
@@ -52,6 +53,31 @@ async def cv(context, message):
         # request all data from selected post
         embedded_link = submission.url
         await context.channel.send(embedded_link)
+    except Exception as exc:
+        if isinstance(exc, rexc.InvalidURL):
+            await context.channel.send('Invalid URL')
+        elif isinstance(exc, rexc.RedditAPIException):
+            await context.channel.send('Reddit API is down, try again later')
+        print(f'@ An exception has occurred: "{exc}"')
+
+
+@bot.command()
+async def cvt(context, message):
+    typesafe_url = message \
+        .replace("<", "").replace(">", "") \
+        .replace("|", "")
+    # remove garbage from URL if present
+    try:
+        submission = await reddit_agent.submission(url=typesafe_url)
+        # request all data from selected post
+        s_time = datetime.utcfromtimestamp(submission.created_utc)\
+            .strftime('%d-%m-%Y @ %H:%M')
+        s_title = submission.title
+        s_text = submission.selftext
+        await context.channel.send(f'> TIME CREATED: *{s_time}*\n'
+                                   f'> TITLE: *{s_title}*\n\n'
+                                   f''  # escape discord quote
+                                   f'> {s_text}')
     except Exception as exc:
         if isinstance(exc, rexc.InvalidURL):
             await context.channel.send('Invalid URL')
