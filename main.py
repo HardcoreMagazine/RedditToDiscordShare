@@ -61,6 +61,33 @@ async def cv(context, message):
 
 
 @bot.command()
+async def cvt(context, message):
+    typesafe_url = message \
+        .replace("<", "").replace(">", "") \
+        .replace("|", "")
+    # remove garbage from URL if present
+    try:
+        submission = await reddit_agent.submission(url=typesafe_url)
+        # request all data from selected post
+        s_title = submission.title
+        s_text = submission.selftext
+        if len(s_text) > 4000:
+            await context.channel.send('Submission contains more than 4000 '
+                                       'characters, unable to process '
+                                       'due to Discord limitations')
+        else:
+            await context.channel.send(f'> **{s_title}**\n\n'
+                                       f''  # escape discord quote
+                                       f'> {s_text}')
+    except Exception as exc:
+        if isinstance(exc, rexc.InvalidURL):
+            await context.channel.send('Invalid URL')
+        elif isinstance(exc, rexc.RedditAPIException):
+            await context.channel.send('Reddit API is down, try again later')
+        print(f'@ An exception has occurred: "{exc}"')
+
+
+@bot.command()
 async def help(context, message=None):
     if message is None:
         msg = '```Available commands:\n\n'
@@ -85,7 +112,7 @@ async def on_command_error(context, error):
         await context.channel.send(f'Unrecognized command\n'
                                    f'Use `{prefix}help` to list '
                                    f'all available commands')
-    if isinstance(error, cmd.MissingRequiredArgument):
+    elif isinstance(error, cmd.MissingRequiredArgument):
         await context.channel.send(f'Missing line argument\n'
                                    f'Use: `{prefix}help [command]`')
     print(f'@ An exception has occurred: "{error}"')
