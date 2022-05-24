@@ -25,7 +25,9 @@ in reddit app (ultimate time saver!)
 ---
 ### Usage
 ```
+,help - list all commands
 ,cv [Submission_URL] - extract image/link from selected post  
+,cvt [Submission_URL] - extract text from selected post  
 ```
 Example:  
 ![image](image.png)
