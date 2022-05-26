@@ -1,6 +1,4 @@
 # RedditToDiscordShare (RTDS)
-*This is a stable branch*  
-*[Experimental branch](https://github.com/HardcoreMagazine/RedditToDiscordShare/tree/experimental)*
 
 Bot made explicitly to extract 
 images/links & text from Reddit links
@@ -35,10 +33,12 @@ Example:
 ---
 ### Dependencies
 ```
-Python >= 3.8.10
+Python ~= 3.8.10
 py-cord >= 1.7.3
 asyncpraw >= 7.5.0
 ```
+Work on older Python versions not guaranteed
+
 ---
 ### 'cfg.py' contents
 ```
