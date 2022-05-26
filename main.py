@@ -110,7 +110,7 @@ async def help(context, message=None):
             msg += f'{c} - {bot_cmds[c]["brief"]}\n'
         msg += f'\nUse {prefix}help [command] ' \
                f'to show help on specific command```'
-        await context.send(msg)
+        await context.channel.send(msg)
     else:
         if message in cmd_keys_list:
             await context.channel.send(f'```{bot_cmds[message]["description"]}\n\n'
