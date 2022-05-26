@@ -1,4 +1,5 @@
 import asyncio
+import re
 import asyncpraw
 from asyncpraw import exceptions as rexc
 from discord.ext import commands as cmd
@@ -35,7 +36,7 @@ async def on_ready():
 @bot.command()
 async def about(context):
     await context.channel.send(f'Open source Discord bot that converts '
-                               f'reddit "share" links into embedded files.\n'
+                               f'reddit "share" links into embedded files/text.\n'
                                f'List all available commands: `{prefix}help`\n'
                                f'Project page on Github: '
                                f'<https://github.com/HardcoreMagazine/RedditToDiscordShare>')
@@ -70,15 +71,30 @@ async def cvt(context, message):
         submission = await reddit_agent.submission(url=typesafe_url)
         # request all data from selected post
         s_title = submission.title
-        s_text = submission.selftext
-        if len(s_text) > 4000:
+        s_text: str = submission.selftext
+        if len(s_text) >= 4000:
             await context.channel.send('Submission contains more than 4000 '
                                        'characters, unable to process '
                                        'due to Discord limitations')
         else:
+            regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)" \
+                    r"(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))" \
+                    r"+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)" \
+                    r"|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
+            link_list = re.findall(regex, s_text)
+            if link_list:  # if list is not empty
+                for link in link_list:
+                    c_link = ''.join(link)
+                    s_text = s_text.replace(c_link, f"<{c_link}>")
+            # hide all internal links ("HTTP(S)://") in <> brackets
+            # for safety reasons^
+            s_text = s_text.replace("&#x200B;", '')
+            # "&#x200B;" - zero-width space character
+            # pops up occasionally due to random
+            # errors on Reddit side
             await context.channel.send(f'> **{s_title}**\n\n'
                                        f''  # escape discord quote
-                                       f'> {s_text}')
+                                       f'{s_text}')
     except Exception as exc:
         if isinstance(exc, rexc.InvalidURL):
             await context.channel.send('Invalid URL')
