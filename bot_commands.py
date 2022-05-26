@@ -27,7 +27,6 @@ bot_cmds = {
                        'meant for r/copypasta)',
         'usage': f'Usage: \n{prefix}cvt [Reddit_URL]'
     }
-    # to be continued...
 }
 
 cmd_keys_list = list()
