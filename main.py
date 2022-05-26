@@ -72,7 +72,7 @@ async def cvt(context, message):
         # request all data from selected post
         s_title = submission.title
         s_text: str = submission.selftext
-        if len(s_text) >= 4000:
+        if len(s_text) > 4000:
             await context.channel.send('Submission contains more than 4000 '
                                        'characters, unable to process '
                                        'due to Discord limitations')
@@ -84,10 +84,9 @@ async def cvt(context, message):
             link_list = re.findall(regex, s_text)
             if link_list:  # if list is not empty
                 for link in link_list:
-                    c_link = ''.join(link)
-                    s_text = s_text.replace(c_link, f"<{c_link}>")
+                    conv_link = ''.join(link)
+                    s_text = s_text.replace(conv_link, f"<{conv_link}>")
             # hide all internal links ("HTTP(S)://") in <> brackets
-            # for safety reasons^
             s_text = s_text.replace("&#x200B;", '')
             # "&#x200B;" - zero-width space character
             # pops up occasionally due to random

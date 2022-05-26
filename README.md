@@ -3,15 +3,15 @@
 *[Stable branch](https://github.com/HardcoreMagazine/RedditToDiscordShare/tree/master)*
 
 Bot made explicitly to extract 
-image/video links from reddit 'share' links
+images/links & text from Reddit links
 and post them as embedded files 
 -- so your friends/server-mates don't have to open post
 in reddit app (ultimate time saver!)
 
 **Tested and works with**:
 - Normal & "share" links
-- Links with brackets "<", ">"
-- External links (such as YouTube, Imgur, Wikipedia)
+- Links with brackets '<', '>'
+- Posts that contain external links (such as YouTube, Imgur, Wikipedia)
 - GIF posts
 - NSFW posts
 
@@ -33,18 +33,18 @@ Example:
 ![image](image.png)
 
 ---
-### Dependencies:
+### Dependencies
 ```
 Python >= 3.8.10
 py-cord >= 1.7.3
 asyncpraw >= 7.5.0
 ```
 ---
-### 'cfg.py' contents:
+### 'cfg.py' contents
 ```
 settings = {
     'discordAPI': {
-        'token': 'bot_private_key',
+        'token': 'bot_private_token',
         'prefix': ','
     },
     'redditAPI': {
