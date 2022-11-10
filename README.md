@@ -18,7 +18,7 @@ in reddit app (ultimate time saver!)
 - Gallery (multi-picture) posts
 
 **Invite bot to your server**:
-* [click me](https://discord.com/api/oauth2/authorize?client_id=975771580993003540&permissions=274878024768&scope=bot) [66% monthly uptime]
+* [click me](https://discord.com/api/oauth2/authorize?client_id=975771580993003540&permissions=274878024768&scope=bot) [0% uptime, looking for new hosts]
 
 ---
 ### Usage
