@@ -1,44 +1,23 @@
 # RedditToDiscordShare (RTDS)
-*This is an experimental version*  
-*[Stable branch](https://github.com/HardcoreMagazine/RedditToDiscordShare/tree/master)*
+*This is an experimental branch, only used for testing*  
+*[>Stable branch<](https://github.com/HardcoreMagazine/RedditToDiscordShare/tree/master)*
 
-Bot made explicitly to extract 
-images/links & text from Reddit links
-and post them as embedded files 
--- so your friends/server-mates don't have to open post
-in reddit app (ultimate time saver!)
-
-**Tested and works with**:
-- Normal & "share" links
-- Links with brackets '<', '>'
-- Posts that contain external links (such as YouTube, Imgur, Wikipedia)
-- GIF posts
-- NSFW posts
-
-**Doesn't work with**:
-- Reddit videos
-- Gallery (multi-picture) posts
-
-**Invite bot to your server**:
-* [click me](https://discord.com/api/oauth2/authorize?client_id=975771580993003540&permissions=274878024768&scope=bot)
-
----
 ### Usage
 ```
-,help - list all commands
-,cv [Submission_URL] - extract image/link from selected post  
-,cvt [Submission_URL] - extract text from selected post  
+>help - list all commands
+>cv [Submission_URL] - extract image/link from selected post  
+>cvt [Submission_URL] - extract text from selected post  
 ```
-Example:  
-![image](image.png)
 
 ---
 ### Dependencies
 ```
-Python >= 3.8.10
-py-cord >= 1.7.3
-asyncpraw >= 7.5.0
+Python == 3.8.10
+py-cord == 2.3.2
+asyncpraw == 7.6.1
 ```
+Note that work with previous or future versions is not guaranteed!
+
 ---
 ### 'cfg.py' contents
 ```
