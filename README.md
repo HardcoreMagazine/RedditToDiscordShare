@@ -23,8 +23,7 @@ Note that work with previous or future versions is not guaranteed!
 ```
 settings = {
     'discordAPI': {
-        'token': 'bot_private_token',
-        'prefix': ','
+        'token': 'bot_private_token'
     },
     'redditAPI': {
         'client_id': 'client_id',
