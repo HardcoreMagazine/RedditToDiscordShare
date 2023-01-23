@@ -1,12 +1,11 @@
 # RedditToDiscordShare (RTDS)
 *This is an experimental branch, only used for testing*  
-*[>Stable branch<](https://github.com/HardcoreMagazine/RedditToDiscordShare/tree/master)*
+*[>>Stable branch<<](https://github.com/HardcoreMagazine/RedditToDiscordShare/tree/master)*
 
 ### Usage
 ```
->help - list all commands
->cv [Submission_URL] - extract image/link from selected post  
->cvt [Submission_URL] - extract text from selected post  
+/exi [Submission_URL] - extract image/link from selected post  
+/ext [Submission_URL] - extract text from selected post  
 ```
 
 ---
