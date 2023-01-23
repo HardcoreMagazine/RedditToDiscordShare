@@ -22,7 +22,7 @@ in reddit app.
 
 ---
 ### Usage [new]
-All commands can be accessed with /
+All commands can be accessed with /  
 ![image](image2.png)  
 If users cannot access bot commands (none available/show up),
 make sure you set 'Integration' settings right! 
