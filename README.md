@@ -6,6 +6,8 @@ and post them as embedded files
 -- so your friends/server-mates don't have to open post
 in reddit app.
 
+***Project has been discontinued due to [Reddit API changes](https://en.wikipedia.org/wiki/2023_Reddit_API_controversy)***.
+
 **Tested and works with**:
 - Normal & "share" links
 - Links with brackets '<', '>' and '||spoiler||' tag
@@ -16,9 +18,6 @@ in reddit app.
 **Doesn't work with**:
 - Reddit videos
 - Gallery (multi-picture) posts
-
-**Invite bot to your server**:
-* [Click](https://discord.com/api/oauth2/authorize?client_id=975771580993003540&permissions=274878024704&scope=bot) [0% uptime, looking for new hosts]
 
 ---
 ### Usage [new]
